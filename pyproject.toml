@@ -1,0 +1,77 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "attribution-engine"
+version = "0.1.0"
+description = "Portfolio value-creation attribution for private equity: synthetic control + interrupted time series."
+requires-python = ">=3.11"
+license = { text = "MIT" }
+readme = "README.md"
+authors = [
+    { name = "attribution-engine contributors" },
+]
+keywords = ["synthetic-control", "causal-inference", "private-equity", "attribution"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "License :: OSI Approved :: MIT License",
+]
+
+dependencies = [
+    "numpy>=1.26,<3",
+    "pandas>=2.1",
+    "pysyncon>=1.2",
+    "statsmodels>=0.14",
+    "scipy>=1.11",
+    "typer>=0.12",
+    "rich>=13.7",
+    "matplotlib>=3.8",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+    "hypothesis>=6.100",
+    "ruff>=0.4",
+]
+dashboard = [
+    "streamlit>=1.35",
+]
+
+[project.scripts]
+attribution = "attribution.cli:app"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/attribution"]
+
+[tool.ruff]
+target-version = "py311"
+line-length = 100
+
+[tool.ruff.lint]
+select = [
+    "E", "F", "I", "N", "W", "UP", "B", "C4", "SIM", "PL",
+    "D", "ARG", "TCH", "NPY",
+]
+ignore = [
+    "D203",  # one-blank-line-before-class
+    "D212",  # multi-line-summary-first-line
+    "PLR2004",  # magic-value-comparison
+    "PLR0913",  # too-many-arguments
+    "PLR0915",  # too-many-statements
+    "PLR0917",  # too-many-positional-arguments
+]
+
+[tool.ruff.lint.pydocstyle]
+convention = "numpy"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q --tb=short"
+
+[tool.hatch.envs.default]
+installer = "uv"

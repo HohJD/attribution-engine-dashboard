@@ -1,0 +1,9 @@
+.venv
+__pycache__/
+*.pyc
+.pytest_cache
+*.egg-info
+output/
+*.csv.bak
+*.json.bak
+uploaded_panel.csv
